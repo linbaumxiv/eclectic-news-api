@@ -86,7 +86,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.getenv('DB_NAME', 'eclectic_news'),
         'USER': os.getenv('DB_USER', 'eclectic_admin'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'Capstone2026!'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'Your_password'),
         'HOST': os.getenv('DB_HOST', '127.0.0.1'),
         'PORT': os.getenv('DB_PORT', '3306'),
         'OPTIONS': {
@@ -139,10 +139,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
 # Placeholders for X API Integration
-X_API_KEY = "usj1AzeUJf0oIid0GVQq7i8f0"
-X_API_SECRET = "CRBW6M01CR3uuxKlFsFy1D3esaysr6do5ziuq7hD9II2Pdbo4J"
-X_ACCESS_TOKEN = "2029405545061597187-bmcYy5EGQZiMbBGWE1G1tIsqRGD5rb"
-X_ACCESS_TOKEN_SECRET = "liQtEs7Yoxlumfxv5jvxZcEyyMMdKJxxYvPRXOOwDzVlX"
+X_API_KEY = "xxxxxx"
+X_API_SECRET = "xxxxx"
+X_ACCESS_TOKEN = "xxxx"
+X_ACCESS_TOKEN_SECRET = "xxxx"
 
 
 REST_FRAMEWORK = {
