@@ -71,7 +71,12 @@ class Publisher(models.Model):
 # --- 3. Article Model ---
 class Article(models.Model):
     """
-    Includes approval workflow and connections to authors/publishers.
+    Represents a news article within the system.
+
+    Attributes:
+        title (str): The headline of the article.
+        author (User): The journalist who wrote the content.
+        is_approved (bool): Editorial status for public visibility.
     """
     title = models.CharField(max_length=255)
     content = models.TextField()
