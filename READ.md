@@ -14,10 +14,16 @@ Granular RBAC: Distinct permissions for Readers, Journalists, and Editors.
 
 Admin Excellence: Enhanced dashboard with bulk actions and horizontal relation filters.
 
+Professional Documentation: Full API and codebase documentation generated via Sphinx.
+
+Containerized: Ready for deployment on any system via Docker.
+
 ### 🛠 Tech Stack
 Backend: Django 5.x+ / Django REST Framework
 
 Database: MariaDB 11.x (Production) / SQLite (Testing)
+
+DevOps: Docker, Sphinx(Documentation)
 
 Third-Party: Tweepy (X API v2), Python-Dotenv
 
@@ -36,60 +42,80 @@ Testing: Django TestCase (Unit & Integration)
 
 The schema is engineered for data integrity. By utilizing a Custom User Model with self-referential Many-to-Many relationships for subscriptions, we eliminated the need for redundant tables, achieving Third Normal Form (3NF).
 
-### 🛠 Installation & Setup
+### 🏗 Installation & Setup
 
-1.Clone the Repository
+1. Clone the Repository
 
 Bash:
-git clone https://github.com/yourusername/eclectic-news.git
-cd eclectic-news
+git clone https://github.com/linbaumxiv/eclectic-news-api.git
+cd eclectic-news-api
 
-2.Database Setup (MariaDB)
+2. Configure Environment (Crucial)
 
-SQL:
-CREATE DATABASE eclectic_news CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'eclectic_admin'@'localhost' IDENTIFIED BY 'your_password';
-GRANT ALL PRIVILEGES ON eclectic_news.* TO 'eclectic_admin'@'localhost';
+For security, sensitive credentials are not tracked by Git. Create a .env file in the root directory:
 
-3.Configure Environment
-Create a .env file in the root directory:
-
-Code snippet:
+Plaintext:
 DB_NAME=eclectic_news
 DB_USER=eclectic_admin
-DB_PASSWORD=your_password
-DB_HOST=127.0.0.1
+DB_PASSWORD=your_actual_password
+DB_HOST=127.0.0.1 (or 'db' if using Docker)
 X_API_KEY=your_keys
+SECRET_KEY=your_django_secret_key
 
-4.Build & Run
+### 🐳 Running with Docker (Recommended)
+
+This is the fastest way to ensure the app works regardless of your local Python or Database setup.
+
+1.Build the Image:
+
+Bash:
+docker build -t eclectic-news .
+
+2. Run the Container:
+
+Bash:
+docker run -p 8000:8000 --env-file .env eclectic-news
+The app will be available at http://localhost:8000.
+
+### 🐍 Running with Virtual Environment (Local Dev)
+
+1. Install Dependencies:
 
 Bash:
 python3 -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+
+2. Database Migration:
+Ensure MariaDB is running locally and matches your .env settings, then:
+
+Bash:
 python3 manage.py migrate
-python3 manage.py createsuperuser
 python3 manage.py runserver
 
-### 🧠 Technical Challenges & Solutions
+### 📚 Documentation (Sphinx)
 
-The MariaDB Migration: Migrated from SQLite to MariaDB to support production workloads. Solved macOS-specific socket connection hurdles (Errcode 13) by reconfiguring directory permissions and forcing TCP/IP connections via 127.0.0.1.
+The project includes a comprehensive documentation suite. To view the technical docs:
 
-Race Conditions in Signals: Implemented decoupled signal logic to ensure that social media dissemination only triggers after a successful database commit.
+1. Navigate to the docs folder: cd docs
 
-Recursive Subscriptions: Leveraged Django's self Many-to-Many relationship on the User model to allow Readers to follow Journalists without creating extraneous join tables.
+2. Build the HTML files: sphinx-build -b html . _build
+
+3. Open docs/_build/html/index.html in your browser.
+
+### 🧠 System Architecture & 3NF
+
+The schema is engineered for data integrity. By utilizing a Custom User Model with self-referential Many-to-Many relationships for subscriptions, we eliminated the need for redundant tables, achieving Third Normal Form (3NF).
 
 ### 🧪 Quality Assurance
+
+Run the test suite to verify logic:
 
 Bash:
 python3 manage.py test eclectic
 
-Test Case:	-Description
-test_unapproved_hidden:	-Ensures unapproved content never leaks to reader feeds.
-test_journalist_self_approval:	-Validates defensive logic preventing unauthorized approval.
-test_feed_filtering:	-Confirms M2M logic accurately personalizes content.
+-test_unapproved_hidden: Ensures unapproved content never leaks.
 
-### Database Migration & Scaling:
-The application has been migrated from SQLite to MariaDB to support concurrent connections and production-level data integrity. I implemented utf8mb4 encoding to support full Unicode (essential for modern global news content) and used environment-based configuration to ensure security and portability across deployment environments.
+-test_journalist_self_approval: Validates defensive logic.
 
-
+-test_feed_filtering: Confirms personalization accuracy.
