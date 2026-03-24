@@ -15,7 +15,9 @@ from .serializers import (
 
 class ArticleViewSet(viewsets.ModelViewSet):
     """
-    Handles Viewing, Creating, and Approving articles.
+    API endpoint that allows articles to be viewed, created, or edited.
+    
+    Filters content based on the user's role and approval status.
     """
     queryset = Article.objects.all()
     serializer_class = ArticleSerializer
