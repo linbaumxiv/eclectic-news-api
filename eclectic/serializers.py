@@ -12,6 +12,12 @@ class PublisherSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'editors', 'journalists']
 
 class ArticleSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the Article model.
+    
+    Converts Article database records into JSON format for API consumption.
+    Includes custom validation to ensure authors are only journalists.
+    """
     author_name = serializers.ReadOnlyField(source='author.username')
     publisher_name = serializers.ReadOnlyField(source='publisher.name')
 
