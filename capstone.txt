@@ -1,8 +1,0 @@
-Project: Eclectic News API
-GitHub Repository: https://github.com/linbaumxiv/eclectic-news-api.git
-
-Project Overview:
-- Integrated MariaDB for production-level 3NF database management.
-- Implemented automated documentation via Sphinx.
-- Containerized the application using Docker for portability.
-- All code, documentation, and container configurations are tracked in the main branch.
